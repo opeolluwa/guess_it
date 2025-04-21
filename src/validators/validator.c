@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+#include "validators/validator.h"
 
 _Bool validate_argument(int argc, char *argv[]) {
     if (!(argc >= 2)) {
