@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "hestia.h"
+#include <sqlite3.h>
 
 _Bool validate_argument(int argc, char *argv[])
 {
@@ -28,7 +29,7 @@ _Bool validate_argument(int argc, char *argv[])
     return 0;
 }
 
-int play_game(char *player_name)
+int play_game(char *player_name, sqlite3 *db)
 {
     return 0;
 }

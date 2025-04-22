@@ -35,13 +35,17 @@ int main(int argc, char *argv[])
 
     if (strcmp(cmd, "play") != 0)
     {
-        play_game("d");
+        char *player_name;
+        printf("Enter your name to begin:");
+        scanf("%s", &player_name);
+        play_game(&player_name, db);
     }
+
     else if ((strcmp("--leaderboard", cmd) || strcmp("-l", cmd)) != 0)
     {
         fetch_high_score();
     }
-    else
+    else if (strcmp("--help", cmd))
     {
         print_help_message();
     }
