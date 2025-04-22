@@ -6,47 +6,49 @@
 
 int main(int argc, char *argv[])
 {
-    char *cmd = argv[1];
-    validate_argument(argc, argv);
-    _Bool is_valid_command = validate_argument(argc, argv);
-    if (is_valid_command != 0)
+    // if (!validate_argument(argc, argv))
+    // {
+    //     fprintf(stderr, "Invalid argument \"%s\" was supplied\n", argv[1]);
+    //     print_help_message();
+    //     return 1;
+    // }
+
+    sqlite3 *db;
+    char *err_msg = NULL;
+
+    if (sqlite3_open("hestia.db", &db) != SQLITE_OK)
     {
-        fprintf(stderr, "invalid argument \"%s\" was supplied\n", cmd);
-        print_help_message();
+        fprintf(stderr, "Error opening db: %s\n", sqlite3_errmsg(db));
         return 1;
     }
 
-    sqlite3 *db;
-    char *err_msg;
-
-    int rc = sqlite3_open("hestia.db", &db);
-    if (rc != SQLITE_OK)
+    const char *query = "CREATE TABLE IF NOT EXISTS player(identifier INTEGER PRIMARY KEY, player_name TEXT)";
+    if (sqlite3_exec(db, query, 0, 0, &err_msg) != SQLITE_OK)
     {
-        fprintf(stderr, "error opening db due to %s\n", sqlite3_errmsg(db));
+        fprintf(stderr, "Error creating table: %s\n", err_msg);
+        sqlite3_free(err_msg);
+        sqlite3_close(db);
+        return 1;
     }
 
-    char *query = "CREATE TABLE IF NOT EXISTS player(identifier INTEGER PRIMARY KEY, player_name TEXT)";
+    const char *cmd = argv[1];
 
-    rc = sqlite3_exec(db, query, 0, 0, &err_msg);
-    if (rc != SQLITE_OK)
+    if (strcmp(cmd, "play") == 0)
     {
-        fprintf(stderr, "error opening db due to %s\n", sqlite3_errmsg(db));
+        char player_name[100];
+        printf("Enter your name to begin: ");
+        scanf("%99s", player_name);
+        play_game(player_name, db);
     }
-
-    if (strcmp(cmd, "play") != 0)
-    {
-        char *player_name;
-        printf("Enter your name to begin:");
-        scanf("%s", &player_name);
-        play_game(&player_name, db);
-    }
-
-    else if ((strcmp("--leaderboard", cmd) || strcmp("-l", cmd)) != 0)
+    else if (strcmp(cmd, "--leaderboard") == 0 || strcmp(cmd, "-l") == 0)
     {
         fetch_high_score();
     }
-    else if (strcmp("--help", cmd))
+    else if (strcmp(cmd, "--help") == 0 || strcmp(cmd, "-h") == 0)
     {
         print_help_message();
     }
+
+    sqlite3_close(db);
+    return 0;
 }
