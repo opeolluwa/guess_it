@@ -1,13 +1,13 @@
-
 #ifndef HESTIA_H
 #define HESTIA_H
 
 _Bool validate_argument(int argc, char *argv[]);
 
-int play(char *player_name);
+int play_game(char *player_name);
 
-void fetch_hight_score();
+void fetch_high_score();
 
-void print_hep_message();
+void print_help_message();
+
 
 #endif

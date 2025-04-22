@@ -12,4 +12,4 @@ watch:
 	$(MAKE) run 
 dev:
 	@echo "Watching for changes... "
-	watchexec -e c make watch
+	watchexec -e c,Makefile make watch

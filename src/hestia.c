@@ -28,11 +28,21 @@ _Bool validate_argument(int argc, char *argv[])
     return 0;
 }
 
-int play(char *player_name)
+int play_game(char *player_name)
 {
     return 0;
 }
 
-void fetch_hight_score() {}
+void fetch_high_score() {}
 
-void print_hep_message() {}
+void print_help_message()
+{
+    char *help_msg = "Classical guess the number game"
+                     "Usage : hestia [COMMAND]"
+                     "Commands :"
+                     "--help | -h\t\tprint this message"
+                     "play \t\tplay the game"
+                     "--leaderboard | -l\t\tsee high scores";
+
+    fprintf(stdout, "%s\n", help_msg);
+}
