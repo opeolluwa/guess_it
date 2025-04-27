@@ -1,18 +1,19 @@
 #include <stdio.h>
-#include "guess_it.c"
+#include "guess_it.h"
 #include <sqlite3.h>
 #include <stdbool.h>
 #include <string.h>
 
 int main(int argc, char *argv[])
 {
-    // if (!validate_argument(argc, argv))
-    // {
-    //     fprintf(stderr, "Invalid argument \"%s\" was supplied\n", argv[1]);
-    //     print_help_message();
-    //     return 1;
     
-    // }
+    if (validate_argument(argc, argv) != 0)
+    {
+        fprintf(stderr, "Invalid argument \"%s\" was supplied\n", argv[1]);
+        print_help_message();
+        return 1;
+    
+    }
 
 
     sqlite3 *db;
