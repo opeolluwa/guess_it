@@ -38,12 +38,7 @@ void fetch_high_score() {}
 
 void print_help_message()
 {
-    char *help_msg = "Classical guess the number game"
-                     "Usage : hestia [COMMAND]"
-                     "Commands :"
-                     "--help | -h\t\tprint this message"
-                     "play \t\tplay the game"
-                     "--leaderboard | -l\t\tsee high scores";
+    char *help_msg = "Classical guess the number game\nUsage : hestia [COMMAND\nCommands :\n--help | -h\t\tprint this message\nplay \t\tplay the game\n--leaderboard | -l\t\tsee high scores";
 
     fprintf(stdout, "%s\n", help_msg);
 }
