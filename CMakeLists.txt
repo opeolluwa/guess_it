@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.31)
-project(hestia C)
 
-set(CMAKE_C_STANDARD 23)
+project(guess_it C)
 
-add_executable(hestia src/main.c)
+find_package(SQLite3 REQUIRED)

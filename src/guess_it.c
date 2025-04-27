@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-#include "hestia.h"
+#include "guess_it.h"
 #include <sqlite3.h>
 
 _Bool validate_argument(int argc, char *argv[])
