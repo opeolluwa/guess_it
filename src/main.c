@@ -1,5 +1,5 @@
 #include <sqlite3.h>
-#include "hestia.h"
+#include "guess_it.c"
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -11,7 +11,9 @@ int main(int argc, char *argv[])
     //     fprintf(stderr, "Invalid argument \"%s\" was supplied\n", argv[1]);
     //     print_help_message();
     //     return 1;
+    
     // }
+    
 
     sqlite3 *db;
     char *err_msg = NULL;
