@@ -1,6 +1,6 @@
-#include <sqlite3.h>
-#include "guess_it.c"
 #include <stdio.h>
+#include "guess_it.c"
+#include <sqlite3.h>
 #include <stdbool.h>
 #include <string.h>
 
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     //     return 1;
     
     // }
-    
+
 
     sqlite3 *db;
     char *err_msg = NULL;
