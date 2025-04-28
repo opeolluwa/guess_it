@@ -25,7 +25,15 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    const char *query = "CREATE TABLE IF NOT EXISTS player(identifier INTEGER PRIMARY KEY, user_name TEXT)";
+    char query[256]; 
+    sprintf(query,
+            "CREATE TABLE IF NOT EXISTS %s ("
+            "identifier INTEGER PRIMARY KEY, "
+            "user_name TEXT, "
+            "score INTEGER DEFAULT %d"
+            ")",
+            PLAYERS_TABLE_NAME, START_OUT_SCORE);
+
     if (sqlite3_exec(db, query, 0, 0, &err_msg) != SQLITE_OK)
     {
         fprintf(stderr, "Error creating table: %s\n", err_msg);
