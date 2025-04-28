@@ -1,5 +1,4 @@
 
-
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
@@ -31,6 +30,11 @@ bool validate_argument(int argc, char *argv[])
 
 int play_game(char *user_name, sqlite3 *db)
 {
+    if (user_name_exist(user_name, db))
+    {
+        fprintf(stderr, "Username %s already exists", user_name);
+        return 1;
+    }
     return 0;
 }
 
@@ -43,17 +47,65 @@ void print_help_message()
     fprintf(stdout, "%s\n", help_msg);
 }
 
-bool user_name_exist(char *user_name[], sqlite3 *db) {}
-int create_user(char *user_name[], sqlite3 *db)
+bool user_name_exist(char *user_name, sqlite3 *db)
 {
-    if (strcmp(user_name, "") == true)
+    sqlite3_stmt *stmt;
+    const char *sql = "SELECT 1 FROM " GUESS_IT_DB_NAME " WHERE user_name = ?";
+    int rc;
+    bool exists = false;
+
+    rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    if (rc != SQLITE_OK)
     {
+        fprintf(stderr, "Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        return false;
+    }
+
+    sqlite3_bind_text(stmt, 1, user_name, -1, SQLITE_STATIC);
+
+    rc = sqlite3_step(stmt);
+    if (rc == SQLITE_ROW)
+    {
+        exists = true;
+    }
+
+    sqlite3_finalize(stmt);
+    return exists;
+}
+
+int create_user(char *user_name, sqlite3 *db)
+{
+    if (!user_name)
+    {
+        fprintf(stderr, "Username is required");
         return 1;
     }
 
-    char buffer[100];
-    sprintf(buffer, "INSERT(user_name) INTO %s VALUES(%s)", "GUESS_IT_DB_NAME", user_name);
+    const char *sql = "INSERT INTO " GUESS_IT_DB_NAME "(user_name) VALUES (?)";
+    sqlite3_stmt *stmt;
+    int rc;
 
+    rc = sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    if (rc != SQLITE_OK)
+    {
+        fprintf(stderr, "Failed to prepare INSERT statement: %s\n", sqlite3_errmsg(db));
+        return 2;
+    }
+
+    sqlite3_bind_text(stmt, 1, user_name, -1, SQLITE_STATIC);
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE)
+    {
+        fprintf(stderr, "Failed to insert user: %s\n", sqlite3_errmsg(db));
+        sqlite3_finalize(stmt);
+        return 3;
+    }
+
+    sqlite3_finalize(stmt);
     return 0;
 }
-struct Score fetch_user_score(char *user_name[], sqlite3 *db) {}
+struct Score fetch_user_score(char *user_name, sqlite3 *db) {}
+int callback(void *NotUsed, int argc, char **argv, char **azColName)
+{
+    return 0;
+}

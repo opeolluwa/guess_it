@@ -1,3 +1,6 @@
+#define GUESS_IT_DB_NAME "player"
+#define GUESS_IT_DB_PATH "guess_it.db"
+
 #include <sqlite3.h>
 #include <stdbool.h>
 
@@ -16,11 +19,8 @@ struct Score
     unsigned long int score;
     char *user_name[];
 };
-bool user_name_exist(char *user_name[], sqlite3 *db);
-int create_user(char *user_name[], sqlite3 *db);
-struct Score fetch_user_score(char *user_name[], sqlite3 *db);
+bool user_name_exist(char *user_name, sqlite3 *db);
+int create_user(char *user_name, sqlite3 *db);
+struct Score fetch_user_score(char *user_name, sqlite3 *db);
 #endif
 
-#ifndef GUESS_IT_DB_NAME
-#define GUESS_IT_DB_NAME "player";
-#endif

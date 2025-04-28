@@ -1,3 +1,5 @@
+
+
 #include <stdio.h>
 #include "guess_it.h"
 #include <sqlite3.h>
@@ -17,7 +19,7 @@ int main(int argc, char *argv[])
     sqlite3 *db;
     char *err_msg = NULL;
 
-    if (sqlite3_open("hestia.db", &db) != SQLITE_OK)
+    if (sqlite3_open(GUESS_IT_DB_PATH, &db) != SQLITE_OK)
     {
         fprintf(stderr, "Error opening db: %s\n", sqlite3_errmsg(db));
         return 1;
@@ -39,7 +41,7 @@ int main(int argc, char *argv[])
         char user_name[100];
         printf("Enter your name to begin: ");
         scanf("%99s", user_name);
-        play_game(user_name, db);
+        return play_game(user_name, db);
     }
     else if (strcmp(cmd, "--leaderboard") == 0 || strcmp(cmd, "-l") == 0)
     {
