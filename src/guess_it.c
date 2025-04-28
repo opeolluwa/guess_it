@@ -30,7 +30,8 @@ bool validate_argument(int argc, char *argv[])
 
 int play_game(char *user_name, sqlite3 *db)
 {
-
+    int vla = 5;
+    bool game_over = (vla == 0);
     if (user_name_exist(user_name, db))
     {
         fprintf(stderr, "Username %s already exists\nChoose another one", user_name);
@@ -42,7 +43,16 @@ int play_game(char *user_name, sqlite3 *db)
         fprintf(stderr, "Error creating user %s", user_name);
         return 1;
     }
-    return 0;
+
+    do
+    {
+
+        printf("gane not over %d", vla);
+        vla -= 1;
+
+    } while (vla > 0);
+
+        return 0;
 }
 
 void fetch_high_score() {}
@@ -57,7 +67,7 @@ void print_help_message()
 bool user_name_exist(char *user_name, sqlite3 *db)
 {
     sqlite3_stmt *stmt;
-    const char *sql = "SELECT 1 FROM " GUESS_IT_DB_NAME " WHERE user_name = ?";
+    const char *sql = "SELECT 1 FROM " PLAYERS_TABLE_NAME " WHERE user_name = ?";
     int rc;
     bool exists = false;
 
@@ -88,7 +98,7 @@ int create_user(char *user_name, sqlite3 *db)
         return 1;
     }
 
-    const char *sql = "INSERT INTO " GUESS_IT_DB_NAME "(user_name) VALUES (?)";
+    const char *sql = "INSERT INTO " PLAYERS_TABLE_NAME "(user_name) VALUES (?)";
     sqlite3_stmt *stmt;
     int rc;
 
