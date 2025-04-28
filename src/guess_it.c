@@ -6,7 +6,7 @@
 #include "guess_it.h"
 #include <sqlite3.h>
 
-_Bool validate_argument(int argc, char *argv[])
+bool validate_argument(int argc, char *argv[])
 {
     if (!(argc >= 2))
     {
@@ -42,3 +42,14 @@ void print_help_message()
 
     fprintf(stdout, "%s\n", help_msg);
 }
+
+bool user_name_exist(char *user_name[], sqlite3 *db) {}
+int create_user(char *user_name[]){
+    if(strcmp(user_name, "")==true){
+        return 1;
+    }
+
+    const char *query = 
+
+}
+Score fetch_user_score(char *user_name[]){}
