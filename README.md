@@ -28,7 +28,7 @@ mkdir build && cd build && cmake ..
 - [GNU Make](https:gnu.org/software/make)
 - [CMake]()
 - [libqlite]()
-- [libuuid]()
+- [libuuid](https://github.com/cloudbase/libuuid/blob/master/uuid.h)
 
 ### Installing
 

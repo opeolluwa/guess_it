@@ -44,12 +44,12 @@ void print_help_message()
 }
 
 bool user_name_exist(char *user_name[], sqlite3 *db) {}
-int create_user(char *user_name[]){
+int create_user(char *user_name[], sqlite3 *db)
+{
     if(strcmp(user_name, "")==true){
         return 1;
     }
 
-    const char *query = 
-
+    const char *query =
 }
-Score fetch_user_score(char *user_name[]){}
+Score fetch_user_score(char *user_name[], sqlite3 *db) {}

@@ -16,10 +16,9 @@ struct Score
 {
     char *user_name[];
     unsigned long score;
-}
-bool user_name_exist(char *user_name[]);
-int create_user(char *user_name[]);
-Score fetch_user_score(char *user_name[]);
+} bool user_name_exist(char *user_name[], sqlite3 *db);
+int create_user(char *user_name[], sqlite3 *db);
+Score fetch_user_score(char *user_name[], sqlite3 *db);
 #endif
 
 #ifndef GUESS_IT_TYPES
