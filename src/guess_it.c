@@ -30,9 +30,16 @@ bool validate_argument(int argc, char *argv[])
 
 int play_game(char *user_name, sqlite3 *db)
 {
+
     if (user_name_exist(user_name, db))
     {
-        fprintf(stderr, "Username %s already exists", user_name);
+        fprintf(stderr, "Username %s already exists\nChoose another one", user_name);
+        return 1;
+    }
+    int rc = create_user(user_name, db);
+    if (rc != 0)
+    {
+        fprintf(stderr, "Error creating user %s", user_name);
         return 1;
     }
     return 0;
@@ -102,6 +109,7 @@ int create_user(char *user_name, sqlite3 *db)
     }
 
     sqlite3_finalize(stmt);
+    sqlite3_close(db);
     return 0;
 }
 struct Score fetch_user_score(char *user_name, sqlite3 *db) {}

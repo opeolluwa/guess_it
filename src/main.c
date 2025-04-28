@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
     const char *cmd = argv[1];
 
-    if (strcmp(cmd, "play") == 0)
+        if (strcmp(cmd, "play") == 0)
     {
         char user_name[100];
         printf("Enter your name to begin: ");
