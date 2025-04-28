@@ -4,23 +4,23 @@
 #ifndef GUESS_IT_VALIDATORS
 #define GUESS_IT_VALIDATORS
 bool validate_argument(int argc, char *argv[]);
-int play_game(char *player_name, sqlite3 *db);
+int play_game(char *user_name, sqlite3 *db);
 void fetch_high_score();
 void print_help_message();
 #endif
-
 
 #ifndef GUESS_IT_DB_API
 #define GUESS_IT_BD_API
 struct Score
 {
+    unsigned long int score;
     char *user_name[];
-    unsigned long score;
-} bool user_name_exist(char *user_name[], sqlite3 *db);
+};
+bool user_name_exist(char *user_name[], sqlite3 *db);
 int create_user(char *user_name[], sqlite3 *db);
-Score fetch_user_score(char *user_name[], sqlite3 *db);
+struct Score fetch_user_score(char *user_name[], sqlite3 *db);
 #endif
 
-#ifndef GUESS_IT_TYPES
-#define GUESS_IT_TYPES
-
+#ifndef GUESS_IT_DB_NAME
+#define GUESS_IT_DB_NAME "player";
+#endif

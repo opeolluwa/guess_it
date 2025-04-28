@@ -29,7 +29,7 @@ bool validate_argument(int argc, char *argv[])
     return 0;
 }
 
-int play_game(char *player_name, sqlite3 *db)
+int play_game(char *user_name, sqlite3 *db)
 {
     return 0;
 }
@@ -46,10 +46,14 @@ void print_help_message()
 bool user_name_exist(char *user_name[], sqlite3 *db) {}
 int create_user(char *user_name[], sqlite3 *db)
 {
-    if(strcmp(user_name, "")==true){
+    if (strcmp(user_name, "") == true)
+    {
         return 1;
     }
 
-    const char *query =
+    char buffer[100];
+    sprintf(buffer, "INSERT(user_name) INTO %s VALUES(%s)", "GUESS_IT_DB_NAME", user_name);
+
+    return 0;
 }
-Score fetch_user_score(char *user_name[], sqlite3 *db) {}
+struct Score fetch_user_score(char *user_name[], sqlite3 *db) {}
