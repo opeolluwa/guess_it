@@ -77,8 +77,12 @@ const char *get_random_item(const char *items[], int size)
     return items[rand() % size];
 }
 
-int play_game(char *user_name, sqlite3 *db)
+int play_game(sqlite3 *db)
 {
+    char user_name[100];
+    printf("Enter your name to begin: ");
+    scanf("%99s", user_name);
+
     srand(time(NULL));
 
     const char *goodEmojis[] = GOOD_FEEDBACK_EMOJIS;
@@ -153,7 +157,7 @@ int play_game(char *user_name, sqlite3 *db)
             printf("Feedback: %s\n", formattedReply);
             printf("You have %d more retries\n", score / 100);
         }
-      }
+    }
 
     return 0;
 }

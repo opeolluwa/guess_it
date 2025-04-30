@@ -1,6 +1,6 @@
 #define PLAYERS_TABLE_NAME "playerS"
 #define GUESS_IT_DB_PATH "guess_it.db"
-#define START_OUT_SCORE  500
+#define START_OUT_SCORE 500
 
 #include <sqlite3.h>
 #include <stdbool.h>
@@ -8,7 +8,7 @@
 #ifndef GUESS_IT_VALIDATORS
 #define GUESS_IT_VALIDATORS
 bool validate_argument(int argc, char *argv[]);
-int play_game(char *user_name, sqlite3 *db);
+int play_game(sqlite3 *db);
 void fetch_high_score();
 void print_help_message();
 #endif
