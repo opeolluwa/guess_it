@@ -9,6 +9,10 @@
 int main(int argc, char *argv[])
 {
 
+    sqlite3 *db;
+    char *err_msg = NULL;
+    char query[256];
+
     if (validate_argument(argc, argv) != 0)
     {
         fprintf(stderr, "Invalid argument \"%s\" was supplied\n", argv[1]);
@@ -16,16 +20,12 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    sqlite3 *db;
-    char *err_msg = NULL;
-
     if (sqlite3_open(GUESS_IT_DB_PATH, &db) != SQLITE_OK)
     {
         fprintf(stderr, "Error opening db: %s\n", sqlite3_errmsg(db));
         return 1;
     }
 
-    char query[256]; 
     sprintf(query,
             "CREATE TABLE IF NOT EXISTS %s ("
             "identifier INTEGER PRIMARY KEY, "
@@ -41,25 +41,24 @@ int main(int argc, char *argv[])
         sqlite3_close(db);
         return 1;
     }
-
     const char *cmd = argv[1];
 
     if (strcmp(cmd, "play") == 0)
     {
-        char user_name[100];
-        printf("Enter your name to begin: ");
-        scanf("%99s", user_name);
-        return play_game(user_name, db);
+        return play_game(db);
     }
-    else if (strcmp(cmd, "--leaderboard") == 0 || strcmp(cmd, "-l") == 0)
-    {
-        fetch_high_score();
-    }
-    else if (strcmp(cmd, "--help") == 0 || strcmp(cmd, "-h") == 0)
+    else if (strcmp(cmd, "--help") == 0)
     {
         print_help_message();
     }
-
+    else if (strcmp(cmd, "--leaderboard") == 0)
+    {
+        fetch_high_score();
+    }
+    else
+    {
+        print_help_message();
+    }
     sqlite3_close(db);
     return 0;
 }
