@@ -41,26 +41,24 @@ int main(int argc, char *argv[])
         sqlite3_close(db);
         return 1;
     }
-
     const char *cmd = argv[1];
-    switch (*cmd)
+
+    if (strcmp(cmd, "play") == 0)
     {
-    case "play":
         return play_game(db);
-        break;
-
-    case "--help":
-        print_help_message();
-        break;
-
-    case "--leaderboard":
-        fetch_high_score();
-        break;
-    default:
-        print_help_message();
-        break;
     }
-
+    else if (strcmp(cmd, "--help") == 0)
+    {
+        print_help_message();
+    }
+    else if (strcmp(cmd, "--leaderboard") == 0)
+    {
+        fetch_high_score();
+    }
+    else
+    {
+        print_help_message();
+    }
     sqlite3_close(db);
     return 0;
 }
