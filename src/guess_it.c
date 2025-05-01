@@ -11,6 +11,8 @@
 #define GOOD_FEEDBACK_EMOJIS {"😊", "😘", "🤗", "💞", "💝", "💓", "💖", "💓", "😍", "😝", "👐", "😚"}
 #define OUCH_FEEDBACK_EMOJIS {"😣", "😭", "😩", "😟", "😤", "😢", "😒", "😌", "😔", "😬", "🤧"}
 
+#define MAX_RAND_NUM 100
+#define MIN_RAND_NUM 1
 // Replies
 #define GREATER_THAN_REPLIES {                                  \
     "Try again, your current input is greater than the number", \
@@ -77,6 +79,15 @@ const char *get_random_item(const char *items[], int size)
     return items[rand() % size];
 }
 
+int generate_random_number()
+{
+    unsigned int seed = time(0);
+
+    int guess = rand_r(&seed) % (MAX_RAND_NUM - MIN_RAND_NUM + 1) + MIN_RAND_NUM;
+
+    return guess;
+}
+
 int play_game(sqlite3 *db)
 {
     char user_name[100];
@@ -103,6 +114,7 @@ int play_game(sqlite3 *db)
 
     bool game_over = false;
     int score = 500;
+    int guess;
 
     if (!user_name_exist(user_name, db))
     {
@@ -114,7 +126,7 @@ int play_game(sqlite3 *db)
         }
     }
 
-    int guess = 56;
+    guess = generate_random_number();
     int user_guess;
     char formattedReply[256];
     printf("System: %s\n", get_random_item(welcomeMsgs, sizeOfWelcomeMsgs));
@@ -127,11 +139,12 @@ int play_game(sqlite3 *db)
 
         if (guess == user_guess)
         {
-            score += 100;
+            score += 500;
             const char *reply = get_random_item(equalReplies, sizeOfEqualReplies);
             sprintf(formattedReply, reply, emoji);
             printf("Feedback: %s\n", formattedReply);
-            printf("You have %d more retries\n", score / 100);
+            printf("You got one more retry! You now have have %d more retries\n", score / 100);
+            guess = generate_random_number();
         }
         else if (user_guess > guess)
         {
@@ -161,6 +174,7 @@ int play_game(sqlite3 *db)
 
     return 0;
 }
+
 
 void fetch_high_score() {}
 
